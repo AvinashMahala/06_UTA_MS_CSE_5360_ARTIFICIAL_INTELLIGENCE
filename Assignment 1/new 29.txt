@@ -1,0 +1,67 @@
+expense_8_puzzle/
+    __init__.py
+    expense_8_puzzle.py
+		import sys
+		from datetime import datetime
+		from expense_8_puzzle import puzzle, solver
+    node.py
+		No Imports
+    search.py
+		import heapq
+		import time
+		from node import Node
+		from queue import PriorityQueue
+    state.py
+		No Imports
+    strategies/
+        __init__.py
+        bfs.py
+			from .strategy import Strategy
+			from queue import Queue
+        dfs.py
+			from .strategy import Strategy
+        dls.py
+			from .strategy import Strategy
+        greedy.py
+			from typing import List
+			from expense_8_puzzle.state import State
+			from expense_8_puzzle.node import Node
+        ids.py
+			from .dls import DLS
+        ucs.py
+			from .strategy import Strategy
+        a_star.py
+			from typing import List
+			from queue import PriorityQueue
+
+			from .base_strategy import BaseStrategy
+			from ..node import Node
+			from ..state import State
+    utils/
+        __init__.py
+        file_io.py
+        log.py
+			import logging
+		
+		
+		
+		implementation for strategies/dls.py
+		implementation for strategies/greedy.py
+		implementation for strategies/ids.py
+		implementation for strategies/ucs.py
+		implementation for strategies/a_star.py
+		
+		
+		implementation for utils/__init__.py
+		implementation for utils/file_io.py
+		implementation for utils/log.py
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
