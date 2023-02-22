@@ -6,12 +6,14 @@ Created on Tue Feb 21 14:41:43 2023
 """
 
 import heapq
+from datetime import datetime
+import sys
 
 # Define the goal state
-goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
+#goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
 
 # Define the initial state
-initial_state = [[2, 3, 6], [1, 0, 7], [4, 8, 5]]
+#initial_state = [[1, 2, 3], [0, 5, 6], [4, 7, 8]]
 #initial_state = [[7, 2, 3], [4, 5, 6], [1, 8, 0]]
 
 # Define the move costs
@@ -52,6 +54,10 @@ def a_star_search(initial_state, goal_state):
     initial_node = Node(initial_state, None, 0)
     fringe = [initial_node]
     closed_list = set()
+    
+    fringe_lst=[]
+    successor_lst=[]   
+    
 
     # Initialize the statistics
     nodes_popped = 0
@@ -75,7 +81,7 @@ def a_star_search(initial_state, goal_state):
                 current_node = current_node.parent
             steps.append(current_node.state)
             steps.reverse()
-            return nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, len(steps) - 1, steps
+            return fringe_lst,successor_lst,nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, len(steps) - 1, steps
 
         # Add the current node to the closed list
         closed_list.add(tuple(map(tuple, current_node.state)))
@@ -112,49 +118,131 @@ def a_star_search(initial_state, goal_state):
             if tuple(map(tuple, new_state)) not in closed_list:
                 successor_nodes.append(Node(new_state, current_node, current_node.move_cost + move_costs[new_state[i][j]]))
                 nodes_generated += 1
-
+        
+        successor_lst.append(successor_nodes)
+        
         # Add the successor nodes to the fringe
         for node in successor_nodes:
             heapq.heappush(fringe, node)
+            fringe_lst.append(node)
             #print(node.state, node.move_cost,node.heuristic_cost, node.total_cost)
 
         # Update the statistics
         nodes_expanded += 1
         max_fringe_size = max(max_fringe_size, len(fringe))
-
+        
+    
+    
     # If the goal state is not found, return None
     return None
 
-# Call the A* search function and print the results
-result = a_star_search(initial_state, goal_state)
-if result:
-    nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, depth, steps = result
-    print(f"Nodes Popped: {nodes_popped}")
-    print(f"Nodes Expanded: {nodes_expanded}")
-    print(f"Nodes Generated: {nodes_generated}")
-    print(f"Max Fringe Size: {max_fringe_size}")
-    print(f"Solution Found at depth {depth} with cost of {steps[-1][0][0]}.")
-    print("Steps:")
-    for i in range(1, len(steps)):
-        move_cost = steps[i][0][0] + steps[i-1][0][0]
-        move_value = steps[i][0][0]
-        move_direction = ''
-        i1, j1 = find_coordinates(move_value, steps[i-1])
-        i2, j2 = find_coordinates(move_value, steps[i])
-        if i1 == i2:
-            if j2 > j1:
-                move_direction = 'Right'
-            else:
-                move_direction = 'Left'
-        elif j1 == j2:
-            if i2 > i1:
-                move_direction = 'Down'
-            else:
-                move_direction = 'Up'
-        print(f"\tMove {move_value} {move_direction} (cost {move_cost})")
-    #for i in steps:
-        #print(i)
-    #print(steps)
-else:
-    print("No solution found.")
+
+
+
+def dump_trace(result,method):
+    filename = f'trace-{datetime.now().strftime("%Y-%m-%d-%H-%M-%S")}.txt'
+    with open(filename, 'w') as f:
+        f.write(f'Command-Line Arguments : {sys.argv}\n')
+        f.write(f'Method Selected: {method}\n')
+        f.write(f'{"*" * 50}\n')
+        f.write(f'Running: {method}\n')
+        if result:
+            fringe_lst,successor_lst,nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, depth, steps = result
+            f.write(f"Nodes Popped: {nodes_popped}\n")
+            f.write(f"Nodes Expanded: {nodes_expanded}\n")
+            f.write(f"Nodes Generated: {nodes_generated}\n")
+            f.write(f"Max Fringe Size: {max_fringe_size}\n")
+            f.write(f"------------------------------------------------------------------------------------------------------------------------\n")
+            f.write(f"List of Successor States:-\n\n")
+            #print(f"{'Name' : <10}{'Marks' : ^10}{'Division' : ^10}{'ID' : >5}")
+            f.write(f"{'Node_Current_State'}\t\t\t\t\t\t\t{'Node_Parent_State'}\t\t\t\t\t\t\t{'Node_Heuristic_Cost'}\t\t\t{'Node_Move_Cost'}\n\n")
+            for i in range(len(fringe_lst)-1):
+                temp=fringe_lst[i]
+                item=[temp.state,temp.parent.state,temp.heuristic_cost,temp.move_cost]
+                
+                f.write(f'{item[0]}\t\t\t{item[1]}\t\t\t{item[2]}\t\t\t\t\t\t\t{item[3]}\n')
+                
+                #f.write(item.state,item.parent.state,item.heuristic_cost,item.move_cost)
+            f.write(f"------------------------------------------------------------------------------------------------------------------------\n")   
+                
+            #print(item.state,item.parent.state,item.heuristic_cost,item.move_cost,item.total_cost)
+        
+        
+        '''
+        for i in range(len(self.fringe_history)):
+            f.write(f'Loop {i + 1}\n')
+            f.write(f'\tFringe: {self.fringe_history[i]}\n')
+            f.write(f'\tClosed: {self.closed_history[i]}\n')
+            f.write(f'\tNodes Expanded: {self.expanded_history[i]}\n')
+            f.write(f'\tNodes Generated: {self.generated_history[i]}\n')
+            f.write(f'\tMax Fringe Size: {self.max_fringe_history[i]}\n')
+            f.write(f'{"*" * 50}\n')
+        '''
+
+
+
+
+
+
+
+
+
+
+
+
+if __name__ == '__main__':
+    # Call the A* search function and print the results
+    
+    start_file = sys.argv[1]
+    goal_file = sys.argv[2]
+    method = sys.argv[3] if len(sys.argv) > 3 else 'a*'
+    dump_flag = True if len(sys.argv) > 4 and sys.argv[4].lower() == 'true' else False
+    with open(start_file, 'r') as f:
+        initial_state = [[int(x) for x in line.split()] for line in f.readlines() if line.strip() and line != 'END OF FILE']
+
+    with open(goal_file, 'r') as f:
+        goal_state = [[int(x) for x in line.split()] for line in f.readlines() if line.strip() and line != 'END OF FILE']
+        
+    initial_state = [[1, 2, 3], [0, 5, 6], [4, 7, 8]]
+    result = a_star_search(initial_state, goal_state)
+    
+    #dump_trace(result,method)
+    
+    if result:
+        fringe_lst,successor_lst,nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, depth, steps = result
+        print(f"Nodes Popped: {nodes_popped}")
+        print(f"Nodes Expanded: {nodes_expanded}")
+        print(f"Nodes Generated: {nodes_generated}")
+        print(f"Max Fringe Size: {max_fringe_size}")
+        print(f"Solution Found at depth {depth} with cost of {steps[-1][0][0]}.")
+        print("Steps:")
+        for i in range(1, len(steps)):
+            move_cost = steps[i][0][0] + steps[i-1][0][0]
+            move_value = steps[i][0][0]
+            move_direction = ''
+            i1, j1 = find_coordinates(move_value, steps[i-1])
+            i2, j2 = find_coordinates(move_value, steps[i])
+            if i1 == i2:
+                if j2 > j1:
+                    move_direction = 'Right'
+                else:
+                    move_direction = 'Left'
+            elif j1 == j2:
+                if i2 > i1:
+                    move_direction = 'Down'
+                else:
+                    move_direction = 'Up'
+            print(f"\tMove {move_value} {move_direction}")
+        #for i in steps:
+            #print(i)
+        #print(steps)
+    else:
+        print("No solution found.")
+
+
+
+
+
+
+
 
