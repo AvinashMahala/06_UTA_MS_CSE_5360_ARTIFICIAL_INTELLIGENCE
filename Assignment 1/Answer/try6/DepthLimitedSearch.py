@@ -7,7 +7,7 @@ Created on Wed Feb 22 03:26:12 2023
 
 from collections import deque
 
-class State:
+class DLS_State:
     def __init__(self, board, cost, moves, last_move):
         self.board = board
         self.cost = cost
@@ -24,7 +24,7 @@ class State:
         return '\n'.join([' '.join(map(str, row)) for row in self.board])
 
     def copy(self):
-        return State([row[:] for row in self.board], self.cost, self.moves[:], self.last_move)
+        return DLS_State([row[:] for row in self.board], self.cost, self.moves[:], self.last_move)
 
     def move(self, dx, dy):
         x, y = self.find(0)
@@ -34,7 +34,7 @@ class State:
         new_board = self.copy().board
         move_cost = new_board[new_x][new_y]
         new_board[x][y], new_board[new_x][new_y] = new_board[new_x][new_y], new_board[x][y]
-        return State(new_board, self.cost + move_cost, self.moves + [move_cost], move_cost)
+        return DLS_State(new_board, self.cost + move_cost, self.moves + [move_cost], move_cost)
 
     def find(self, value):
         for i, row in enumerate(self.board):
@@ -42,7 +42,7 @@ class State:
                 if cell == value:
                     return i, j
 
-def dls(initial_state, goal_state, depth_limit):
+def DLS_Search(initial_state, goal_state, depth_limit):
     nodes_popped = 0
     nodes_expanded = 0
     nodes_generated = 0
@@ -70,58 +70,11 @@ def dls(initial_state, goal_state, depth_limit):
             if child and child not in visited:
                 nodes_generated += 1
 
-                if nodes_generated % 10000 == 0:
-                    print(f"Nodes generated: {nodes_generated}")
+                #if nodes_generated % 10000 == 0:
+                    #print(f"Nodes generated: {nodes_generated}")
 
                 fringe.append((child, depth + 1))
                 nodes_expanded += 1
 
     return None
-
-
-def get_move_direction(move):
-    if move == 1:
-        return "Up"
-    elif move == 2:
-        return "Right"
-    elif move == 3:
-        return "Down"
-    elif move == 4:
-        return "Left"
-    elif move == 5:
-        return "Up-Left"
-    elif move == 6:
-        return "Down-Left"
-    elif move == 7:
-        return "Down-Right"
-    elif move == 8:
-        return "Up-Right"
-    
-    
-# Example usage
-initial_board = [[2, 3, 6], [1, 0, 7], [4, 8, 5]]
-initial_state = State(initial_board, 0, [], None)
-goal_board = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
-goal_state = State(goal_board, 0, [], None)
-
-depth_limit = 100
-result = None
-
-for i in range(depth_limit):
-    result = dls(initial_state, goal_state, i)
-    if result:
-        break
-
-if result:
-    nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, cost, moves = result
-    print(f"Nodes Popped: {nodes_popped}")
-    print(f"Nodes Expanded: {nodes_expanded}")
-    print(f"Nodes Generated: {nodes_generated}")
-    print(f"Max Fringe Size: {max_fringe_size}")
-    print(f"Solution Found at depth {len(moves)} with cost of {cost}.")
-    print("Steps:")
-    for move in moves:
-        print(f"Move {move} {get_move_direction(move)}")
-else:
-    print("No solution found.")
 

@@ -1,0 +1,180 @@
+[[2, 3, 6], [1, 0, 7], [4, 8, 5]]
+236107485
+
+python expense_8_puzzle.py start.txt goal.txt bfs true
+python expense_8_puzzle.py start.txt goal.txt ucs true
+python expense_8_puzzle.py start.txt goal.txt dfs true
+python expense_8_puzzle.py start.txt goal.txt dls true
+python expense_8_puzzle.py start.txt goal.txt ids true
+python expense_8_puzzle.py start.txt goal.txt greedy true
+python expense_8_puzzle.py start.txt goal.txt a* true
+
+
+
+bfs
+Nodes Popped: 1882
+Nodes Expanded: 3345
+Nodes Generated: 5227
+Max Fringe Size: 1285
+Solution Found at depth 12 with cost of 63.
+Steps:
+        Move 7 Up
+        Move 5 Left
+        Move 8 Up
+        Move 7 Left
+        Move 5 Up
+        Move 6 Left
+        Move 3 Up
+        Move 2 Left
+        Move 1 Up
+        Move 4 Left
+        Move 7 Up
+        Move 8 Left
+		
+		
+aStar
+---------------------------------------------------------
+Method Selected: a*
+Nodes Popped: 6536
+Nodes Expanded: 18473
+Nodes Generated: 18473
+Max Fringe Size: 11939
+Solution Found at depth 12 with cost of 63.
+Steps:
+Move 7 Down-Right
+Move 5 Up-Left
+Move 8 Up-Right
+Move 7 Down-Right
+Move 5 Up-Left
+Move 6 Down-Left
+Move 3 Down
+Move 2 Right
+Move 1 Up
+Move 4 Left
+Move 7 Down-Right
+Move 8 Up-Right
+
+---------------------------------------------------------
+ucs
+---------------------------------------------------------
+Nodes Popped: 7283
+Nodes Expanded: 7282
+Nodes Generated: 19809
+Max Fringe Size: 4286
+Solution Found at depth 63 with cost of 63.
+Steps:
+        Move 7 Left
+        Move 5 Left
+        Move 8 Left
+        Move 1 Left
+        Move 7 Left
+        Move 6 Left
+        Move 3 Left
+        Move 2 Down
+        Move 4 Down
+        Move 8 Right
+        Move 5 Right
+        Move 7 Up
+
+---------------------------------------------------------
+dls
+---------------------------------------------------------
+Nodes Popped: 4896
+Nodes Expanded: 4908
+Nodes Generated: 4908
+Max Fringe Size: 21
+Solution Found at depth 22 with cost of 113.
+Steps:
+Move 3 Down
+Move 6 Down-Left
+Move 7 Down-Right
+Move 3 Down
+Move 6 Down-Left
+Move 7 Down-Right
+Move 3 Down
+Move 6 Down-Left
+Move 7 Down-Right
+Move 3 Down
+Move 6 Down-Left
+Move 5 Up-Left
+Move 8 Up-Right
+Move 7 Down-Right
+Move 5 Up-Left
+Move 6 Down-Left
+Move 3 Down
+Move 2 Right
+Move 1 Up
+Move 4 Left
+Move 7 Down-Right
+Move 8 Up-Right
+
+---------------------------------------------------------
+ids
+Nodes generated: 10000
+Nodes generated: 20000
+Nodes generated: 30000
+Nodes generated: 40000
+Nodes generated: 50000
+Nodes generated: 60000
+
+---------------------------------------------------------
+Nodes Popped: 61790
+Nodes Expanded: 61780
+Nodes Generated: 61780
+Max Fringe Size: 21
+Solution Found at depth 22 with cost of 113.
+Steps:
+Move 3 Down
+Move 6 Down-Left
+Move 7 Down-Right
+Move 3 Down
+Move 6 Down-Left
+Move 7 Down-Right
+Move 3 Down
+Move 6 Down-Left
+Move 7 Down-Right
+Move 3 Down
+Move 6 Down-Left
+Move 5 Up-Left
+Move 8 Up-Right
+Move 7 Down-Right
+Move 5 Up-Left
+Move 6 Down-Left
+Move 3 Down
+Move 2 Right
+Move 1 Up
+Move 4 Left
+Move 7 Down-Right
+Move 8 Up-Right
+
+---------------------------------------------------------
+greedy
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
