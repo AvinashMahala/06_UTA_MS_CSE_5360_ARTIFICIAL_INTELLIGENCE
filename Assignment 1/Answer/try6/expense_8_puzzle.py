@@ -52,12 +52,14 @@ if __name__ == '__main__':
     if method == 'a*':
         initial_state = AStar_State(initial_board, 0, [], None)
         goal_state = AStar_State(goal_board, 0, [], None)
+
+        print("\n---------------------------------------------------------")
+        print(f"Method Selected: {method}")
         result = AStar_search(initial_state, goal_state)
 
         if result:
             nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, cost, moves = result
-            print("\n---------------------------------------------------------")
-            print(f"Method Selected: {method}")
+            
             print(f"Nodes Popped: {nodes_popped}")
             print(f"Nodes Expanded: {nodes_expanded}")
             print(f"Nodes Generated: {nodes_generated}")
@@ -75,13 +77,15 @@ if __name__ == '__main__':
     elif method == 'bfs':
         initial_state = BFS_State(initial_board, 0, [], None)
         goal_state = BFS_State(goal_board, 0, [], None)
+
+        print("\n---------------------------------------------------------")
+        print(f"Method Selected: {method}")
         result = BFS_Search(initial_state, goal_state)
         
 
         if result is not None:
             result, visited, nodes_generated, max_fringe_size = BFS_Search(initial_state, goal_state)
-            print("\n---------------------------------------------------------")
-            print(f"Method Selected: {method}")
+
             print(f'Nodes Popped: {len(visited)}')
             print(f'Nodes Expanded: {nodes_generated}')
             print(f'Nodes Generated: {nodes_generated + len(visited)}')
@@ -100,11 +104,13 @@ if __name__ == '__main__':
     elif method == 'ucs':
         initial_state = UCS_PuzzleState(initial_board)
         goal_state = UCS_PuzzleState(goal_board)
+
+        print("\n---------------------------------------------------------")
+        print(f"Method Selected: {method}")
         nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, cost, solution_state = UCS_Search(initial_state, goal_state)
 
         if solution_state:
-            print("\n---------------------------------------------------------")
-            print(f"Method Selected: {method}")
+
             print(f"Nodes Popped: {nodes_popped}")
             print(f"Nodes Expanded: {nodes_expanded}")
             print(f"Nodes Generated: {nodes_generated}")
@@ -124,17 +130,20 @@ if __name__ == '__main__':
         else:
             print("No solution found.")
 
-    #Need To Check Still gives Error.
     elif method == 'dfs':
+        initial_board = [[1, 2, 3], [0, 5, 6], [4, 7, 8]]
         initial_state = DFS_State(initial_board, 0, [], None)
         goal_state = DFS_State(goal_board, 0, [], None)
 
+
+        print("\n---------------------------------------------------------")
+        print(f"Method Selected: {method}")
         result = DFS_Search(initial_state, goal_state)
+        nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, cost, moves = result
 
         if result:
-            print("\n---------------------------------------------------------")
-            nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, cost, moves = result
-            print(f"Method Selected: {method}")
+            
+
             print(f"Nodes Popped: {nodes_popped}")
             print(f"Nodes Expanded: {nodes_expanded}")
             print(f"Nodes Generated: {nodes_generated}")
@@ -152,16 +161,17 @@ if __name__ == '__main__':
         goal_state = DLS_State(goal_board, 0, [], None)
         depth_limit = 30
         result = None
-
+        print("\n---------------------------------------------------------")
+        print(f"Method Selected: {method}")
         for i in range(depth_limit):
             result = DLS_Search(initial_state, goal_state, i)
             if result:
                 break
 
         if result:
-            print("\n---------------------------------------------------------")
+
             nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, cost, moves = result
-            print(f"Method Selected: {method}")
+
             print(f"Nodes Popped: {nodes_popped}")
             print(f"Nodes Expanded: {nodes_expanded}")
             print(f"Nodes Generated: {nodes_generated}")
@@ -177,12 +187,14 @@ if __name__ == '__main__':
     elif method == 'ids':
         initial_state = IDS_State(initial_board, 0, [], None)
         goal_state = IDS_State(goal_board, 0, [], None)
+
+        print("\n---------------------------------------------------------")
+        print(f"Method Selected: {method}")
         result = IDS_Search(initial_state, goal_state)
 
         if result:
             nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, cost, moves = result
-            print("\n---------------------------------------------------------")
-            print(f"Method Selected: {method}")
+            
             print(f"Nodes Popped: {nodes_popped}")
             print(f"Nodes Expanded: {nodes_expanded}")
             print(f"Nodes Generated: {nodes_generated}")
@@ -195,16 +207,16 @@ if __name__ == '__main__':
         else:
             print("No solution found.")
 
-    #Not Working. Need To Check.
     elif method == 'greedy':
         #initial_board = [[1, 2, 3], [0, 5, 6], [4, 7, 8]]
         initial_state = Greedy_State(initial_board, 0, [], None)
         goal_state = Greedy_State(goal_board, 0, [], None)
 
+        print("\n---------------------------------------------------------")
+        print(f"Method Selected: {method}")
         nodes_popped,nodes_expanded, result, visited, nodes_generated, max_fringe_size = Greedy_Search(initial_state, goal_state)
 
         if result:
-            print(f"Method Selected: {method}")
             print(f"Nodes Popped: {nodes_popped}")
             print(f"Nodes Expanded: {nodes_expanded}")
             print(f"Nodes Generated: {nodes_generated}")
@@ -215,6 +227,7 @@ if __name__ == '__main__':
                 print(f"Move {move} {get_move_direction(move)}")
         else:
             print("No solution found.")
+        print("\n---------------------------------------------------------")
 
     
     end_time = datetime.now()

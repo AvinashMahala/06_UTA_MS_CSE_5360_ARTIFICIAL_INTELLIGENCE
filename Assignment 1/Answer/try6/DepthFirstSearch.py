@@ -1,5 +1,4 @@
 from collections import deque
-#Need To Check Still gives Error.
 class DFS_State:
     def __init__(self, board, cost, moves, last_move):
         self.board = board
@@ -50,6 +49,7 @@ def DFS_Search(initial_state, goal_state):
         nodes_popped += 1
 
         if state == goal_state:
+            #print(state)
             return nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, state.cost, state.moves
 
         visited.add(state)
