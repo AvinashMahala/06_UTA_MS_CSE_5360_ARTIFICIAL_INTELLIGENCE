@@ -78,3 +78,46 @@ def DLS_Search(initial_state, goal_state, depth_limit):
 
     return None
 
+def get_move_direction(move):
+    if move == 1:
+        return "Up"
+    elif move == 2:
+        return "Right"
+    elif move == 3:
+        return "Down"
+    elif move == 4:
+        return "Left"
+    elif move == 5:
+        return "Up-Left"
+    elif move == 6:
+        return "Down-Left"
+    elif move == 7:
+        return "Down-Right"
+    elif move == 8:
+        return "Up-Right"
+
+        
+def DLSMainMethod(initial_board,goal_board,method):
+    initial_state = DLS_State(initial_board, 0, [], None)
+    goal_state = DLS_State(goal_board, 0, [], None)
+    depth_limit = 100
+    result = None
+    print("\n---------------------------------------------------------")
+    print(f"Method Selected: {method}")
+    for i in range(depth_limit):
+        result = DLS_Search(initial_state, goal_state, i)
+        if result:
+            break
+    if result:
+        nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, cost, moves = result
+        print(f"Nodes Popped: {nodes_popped}")
+        print(f"Nodes Expanded: {nodes_expanded}")
+        print(f"Nodes Generated: {nodes_generated}")
+        print(f"Max Fringe Size: {max_fringe_size}")
+        print(f"Solution Found at depth {len(moves)} with cost of {cost}.")
+        print("Steps:")
+        for move in moves:
+            print(f"Move {move} {get_move_direction(move)}")
+        print("\n---------------------------------------------------------")
+    else:
+        print("No solution found.")

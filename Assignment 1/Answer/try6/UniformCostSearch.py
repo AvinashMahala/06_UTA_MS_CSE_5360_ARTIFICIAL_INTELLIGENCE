@@ -58,3 +58,29 @@ def UCS_Search(start_state, goal_state):
         nodes_expanded += 1
 
     return nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, float('inf'), None
+
+def UCSMainMethod(initial_board,goal_board,method):
+    initial_state = UCS_PuzzleState(initial_board)
+    goal_state = UCS_PuzzleState(goal_board)
+    print("\n---------------------------------------------------------")
+    print(f"Method Selected: {method}")
+    nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, cost, solution_state = UCS_Search(initial_state, goal_state)
+    if solution_state:
+        print(f"Nodes Popped: {nodes_popped}")
+        print(f"Nodes Expanded: {nodes_expanded}")
+        print(f"Nodes Generated: {nodes_generated}")
+        print(f"Max Fringe Size: {max_fringe_size}")
+        print(f"Solution Found at depth {solution_state.cost} with cost of {cost}.")
+        print("Steps:")
+        curr_state = solution_state
+        steps = []
+        while curr_state.move:
+            steps.append(curr_state.move)
+            curr_state = curr_state.parent
+        steps.reverse()
+        for i, j in steps:
+            print(f"\tMove {curr_state.board[i][j]} {'Left' if j > curr_state.get_blank_pos()[1] else 'Right' if j < curr_state.get_blank_pos()[1] else 'Up' if i > curr_state.get_blank_pos()[0] else 'Down'}")
+            curr_state = curr_state.get_successors()[i-1]
+        print("\n---------------------------------------------------------")
+    else:
+        print("No solution found.")

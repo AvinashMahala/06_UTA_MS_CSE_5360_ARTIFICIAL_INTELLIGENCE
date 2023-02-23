@@ -83,6 +83,45 @@ def Greedy_Search(initial_state, goal_state):
         max_fringe_size = max(max_fringe_size, fringe.qsize())
 
     return nodes_popped,nodes_expanded, None, visited, nodes_generated, max_fringe_size
+
+
+def get_move_direction(move):
+    if move == 1:
+        return "Up"
+    elif move == 2:
+        return "Right"
+    elif move == 3:
+        return "Down"
+    elif move == 4:
+        return "Left"
+    elif move == 5:
+        return "Up-Left"
+    elif move == 6:
+        return "Down-Left"
+    elif move == 7:
+        return "Down-Right"
+    elif move == 8:
+        return "Up-Right"
+
+        
+def GreedyMainMethod(initial_board,goal_board,method):
+    initial_state = Greedy_State(initial_board, 0, [], None)
+    goal_state = Greedy_State(goal_board, 0, [], None)
+    print("\n---------------------------------------------------------")
+    print(f"Method Selected: {method}")
+    nodes_popped,nodes_expanded, result, visited, nodes_generated, max_fringe_size = Greedy_Search(initial_state, goal_state)
+    if result:
+        print(f"Nodes Popped: {nodes_popped}")
+        print(f"Nodes Expanded: {nodes_expanded}")
+        print(f"Nodes Generated: {nodes_generated}")
+        print(f"Max Fringe Size: {max_fringe_size}")
+        print(f"Solution Found at depth {len(result.moves)} with cost of {result.cost}.")
+        print("Steps:")
+        for move in result.moves:
+            print(f"Move {move} {get_move_direction(move)}")
+    else:
+        print("No solution found.")
+    print("\n---------------------------------------------------------")
 '''
 # Example usage
 initial_board = [

@@ -59,3 +59,25 @@ def BFS_Search(initial_state, goal_state):
         max_fringe_size = max(max_fringe_size, fringe.qsize())
 
     return None, visited, nodes_generated, max_fringe_size
+
+def BFSMainMethod(initial_board,goal_board,method):
+    initial_state = BFS_State(initial_board, 0, [], None)
+    goal_state = BFS_State(goal_board, 0, [], None)
+    print("\n---------------------------------------------------------")
+    print(f"Method Selected: {method}")
+    result = BFS_Search(initial_state, goal_state)
+    
+    if result is not None:
+        result, visited, nodes_generated, max_fringe_size = BFS_Search(initial_state, goal_state)
+        print(f'Nodes Popped: {len(visited)}')
+        print(f'Nodes Expanded: {nodes_generated}')
+        print(f'Nodes Generated: {nodes_generated + len(visited)}')
+        print(f'Max Fringe Size: {max_fringe_size}')
+        print(f'Solution Found at depth {len(result.moves)} with cost of {result.cost}.')
+        print('Steps:')
+        for move in result.moves:
+            result.last_move = (result.last_move + 2) % 4
+            print(f'\tMove {move} {["Left", "Right", "Up", "Down"][result.last_move]}')
+        print("\n---------------------------------------------------------")
+    else:
+        print("No solution found.")
