@@ -192,21 +192,21 @@ if __name__ == '__main__':
 
     #Not Working. Need To Check.
     elif method == 'greedy':
-        initial_board = [[1, 2, 3], [0, 5, 6], [4, 7, 8]]
+        #initial_board = [[1, 2, 3], [0, 5, 6], [4, 7, 8]]
         initial_state = Greedy_State(initial_board, 0, [], None)
         goal_state = Greedy_State(goal_board, 0, [], None)
 
-        result = Greedy_Search(initial_state, goal_state)
+        nodes_popped,nodes_expanded, result, visited, nodes_generated, max_fringe_size = Greedy_Search(initial_state, goal_state)
 
         if result:
-            nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, cost, moves = result
+            
             print(f"Nodes Popped: {nodes_popped}")
             print(f"Nodes Expanded: {nodes_expanded}")
             print(f"Nodes Generated: {nodes_generated}")
             print(f"Max Fringe Size: {max_fringe_size}")
-            print(f"Solution Found at depth {len(moves)} with cost of {cost}.")
+            print(f"Solution Found at depth {len(result.moves)} with cost of {result.cost}.")
             print("Steps:")
-            for move in moves:
+            for move in result.moves:
                 print(f"Move {move} {get_move_direction(move)}")
         else:
             print("No solution found.")
