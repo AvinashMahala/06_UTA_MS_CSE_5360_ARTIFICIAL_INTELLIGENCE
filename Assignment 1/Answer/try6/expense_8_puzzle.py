@@ -81,6 +81,7 @@ if __name__ == '__main__':
         if result is not None:
             result, visited, nodes_generated, max_fringe_size = BFS_Search(initial_state, goal_state)
             print("\n---------------------------------------------------------")
+            print(f"Method Selected: {method}")
             print(f'Nodes Popped: {len(visited)}')
             print(f'Nodes Expanded: {nodes_generated}')
             print(f'Nodes Generated: {nodes_generated + len(visited)}')
@@ -103,6 +104,7 @@ if __name__ == '__main__':
 
         if solution_state:
             print("\n---------------------------------------------------------")
+            print(f"Method Selected: {method}")
             print(f"Nodes Popped: {nodes_popped}")
             print(f"Nodes Expanded: {nodes_expanded}")
             print(f"Nodes Generated: {nodes_generated}")
@@ -132,6 +134,7 @@ if __name__ == '__main__':
         if result:
             print("\n---------------------------------------------------------")
             nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, cost, moves = result
+            print(f"Method Selected: {method}")
             print(f"Nodes Popped: {nodes_popped}")
             print(f"Nodes Expanded: {nodes_expanded}")
             print(f"Nodes Generated: {nodes_generated}")
@@ -158,6 +161,7 @@ if __name__ == '__main__':
         if result:
             print("\n---------------------------------------------------------")
             nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, cost, moves = result
+            print(f"Method Selected: {method}")
             print(f"Nodes Popped: {nodes_popped}")
             print(f"Nodes Expanded: {nodes_expanded}")
             print(f"Nodes Generated: {nodes_generated}")
@@ -178,6 +182,7 @@ if __name__ == '__main__':
         if result:
             nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, cost, moves = result
             print("\n---------------------------------------------------------")
+            print(f"Method Selected: {method}")
             print(f"Nodes Popped: {nodes_popped}")
             print(f"Nodes Expanded: {nodes_expanded}")
             print(f"Nodes Generated: {nodes_generated}")
@@ -199,7 +204,7 @@ if __name__ == '__main__':
         nodes_popped,nodes_expanded, result, visited, nodes_generated, max_fringe_size = Greedy_Search(initial_state, goal_state)
 
         if result:
-            
+            print(f"Method Selected: {method}")
             print(f"Nodes Popped: {nodes_popped}")
             print(f"Nodes Expanded: {nodes_expanded}")
             print(f"Nodes Generated: {nodes_generated}")
