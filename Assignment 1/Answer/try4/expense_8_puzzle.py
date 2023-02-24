@@ -227,7 +227,8 @@ def print_solution(self, node):
         print(f'\t{i + 1}. {path[len(path) - 1 - i]}')
 
 def dump_trace(self):
-    filename = f'trace-{datetime.now().strftime("%Y-%m-%d-%H-%M-%S")}.txt'
+    filename = f'trace-{datetime.now().strftime("trace-%m_%d_%Y-%I_%M_%S_%p")}.txt'
+    
     with open(filename, 'w') as f:
         f.write(f'Command-Line Arguments : {sys.argv}\n')
         f.write(f'Method Selected: {self.method}\n')

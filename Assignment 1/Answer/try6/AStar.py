@@ -1,5 +1,7 @@
 
 from queue import PriorityQueue
+from datetime import datetime
+import os
 
 move_costs = {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8}
 class AStar_State:
@@ -92,12 +94,52 @@ def get_move_direction(move):
     elif move == 8:
         return "Up-Right"
 
-def AStarMainMethod(initial_board,goal_board,method):
+def AStarTraceResultsToFile(result, argv, method):
+    directory_name = "trace_logs"
+    # Create the directory if it doesn't exist
+    if not os.path.exists(directory_name):
+        os.makedirs(directory_name)
+
+    filename = f'a_star_algorithm_trace-{datetime.now().strftime("%m_%d_%Y-%I_%M_%S_%p")}.txt'
+
+    # Full path to the file
+    file_path = os.path.join(directory_name, filename)
+
+    if not os.path.exists(file_path):
+        with open(file_path, 'w') as f:
+            f.write(f"\n---------------------------------------------------------\n")
+            f.write(f'Command-Line Arguments : {argv}\n')
+            f.write(f'Method Selected: {method}\n')
+            f.write(f'Running: {method}\n')
+
+            if result:
+                nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, cost, moves = result
+                
+                f.write(f"Nodes Popped: {nodes_popped}\n")
+                f.write(f"Nodes Expanded: {nodes_expanded}\n")
+                f.write(f"Nodes Generated: {nodes_generated}\n")
+                f.write(f"Max Fringe Size: {max_fringe_size}\n")
+                f.write(f"Solution Found at depth {len(moves)} with cost of {cost}.\n")
+                f.write("Steps:\n")
+                for move in moves:
+                    f.write(f"Move {move} {get_move_direction(move)}\n")
+            else:
+                print("No solution found.\n")
+            f.write("\n---------------------------------------------------------")
+        print(f"File created at {file_path}")
+    else:
+        print(f"File {file_path} already exists.")
+    
+
+
+def AStarMainMethod(initial_board,goal_board,argv,method,dump_flag):
     initial_state = AStar_State(initial_board, 0, [], None)
     goal_state = AStar_State(goal_board, 0, [], None)
     print("\n---------------------------------------------------------")
     print(f"Method Selected: {method}")
     result = AStar_search(initial_state, goal_state)
+    if dump_flag:
+        AStarTraceResultsToFile(result, argv, method)
     if result:
         nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, cost, moves = result
         

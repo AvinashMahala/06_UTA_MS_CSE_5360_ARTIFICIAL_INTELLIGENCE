@@ -1,4 +1,7 @@
 from collections import deque
+from datetime import datetime
+import os
+
 class DFS_State:
     def __init__(self, board, cost, moves, last_move):
         self.board = board
@@ -86,16 +89,56 @@ def get_move_direction(move):
     elif move == 8:
         return "Up-Right"
 
-def DFSMainMethod(initial_board,goal_board,method):
+def DFSTraceResultsToFile(result, argv, method):
+    directory_name = "trace_logs"
+    # Create the directory if it doesn't exist
+    if not os.path.exists(directory_name):
+        os.makedirs(directory_name)
+
+    filename = f'dfs_algorithm_trace-{datetime.now().strftime("%m_%d_%Y-%I_%M_%S_%p")}.txt'
+
+    # Full path to the file
+    file_path = os.path.join(directory_name, filename)
+
+    if not os.path.exists(file_path):
+        with open(file_path, 'w') as f:
+            f.write(f"\n---------------------------------------------------------\n")
+            f.write(f'Command-Line Arguments : {argv}\n')
+            f.write(f'Method Selected: {method}\n')
+            f.write(f'Running: {method}\n')
+
+            if result:
+                nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, cost, moves = result
+
+                f.write(f"Nodes Popped: {nodes_popped}\n")
+                f.write(f"Nodes Expanded: {nodes_expanded}\n")
+                f.write(f"Nodes Generated: {nodes_generated}\n")
+                f.write(f"Max Fringe Size: {max_fringe_size}\n")
+                f.write(f"Solution Found at depth {len(moves)} with cost of {cost}.\n")
+                f.write("Steps:")
+                for move in moves:
+                    f.write(f"Move {move} {get_move_direction(move)}\n")
+            else:
+                    f.write("No solution found.")
+            f.write("\n---------------------------------------------------------")
+        print(f"File created at {file_path}")
+    else:
+        print(f"File {file_path} already exists.")
+
+    
+
+def DFSMainMethod(initial_board,goal_board,argv,method,dump_flag):
     initial_board = [[1, 2, 3], [0, 5, 6], [4, 7, 8]]
     initial_state = DFS_State(initial_board, 0, [], None)
     goal_state = DFS_State(goal_board, 0, [], None)
     print("\n---------------------------------------------------------")
     print(f"Method Selected: {method}")
     result = DFS_Search(initial_state, goal_state)
-    nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, cost, moves = result
+    if dump_flag:
+        DFSTraceResultsToFile(result, argv, method)
+
     if result:
-        
+        nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, cost, moves = result
         print(f"Nodes Popped: {nodes_popped}")
         print(f"Nodes Expanded: {nodes_expanded}")
         print(f"Nodes Generated: {nodes_generated}")
@@ -104,7 +147,7 @@ def DFSMainMethod(initial_board,goal_board,method):
         print("Steps:")
         for move in moves:
             print(f"Move {move} {get_move_direction(move)}")
-        print("\n---------------------------------------------------------")
     else:
             print("No solution found.")
+    print("\n---------------------------------------------------------")
 

@@ -1,11 +1,6 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Feb 22 03:26:12 2023
-
-@author: abhi
-"""
-
 from collections import deque
+from datetime import datetime
+import os
 
 class DLS_State:
     def __init__(self, board, cost, moves, last_move):
@@ -70,8 +65,8 @@ def DLS_Search(initial_state, goal_state, depth_limit):
             if child and child not in visited:
                 nodes_generated += 1
 
-                #if nodes_generated % 10000 == 0:
-                    #print(f"Nodes generated: {nodes_generated}")
+                if nodes_generated % 10000 == 0:
+                    print(f"Nodes generated: {nodes_generated}")
 
                 fringe.append((child, depth + 1))
                 nodes_expanded += 1
@@ -96,8 +91,45 @@ def get_move_direction(move):
     elif move == 8:
         return "Up-Right"
 
-        
-def DLSMainMethod(initial_board,goal_board,method):
+
+def DLSTraceResultsToFile(result, argv, method):
+
+    directory_name = "trace_logs"
+    # Create the directory if it doesn't exist
+    if not os.path.exists(directory_name):
+        os.makedirs(directory_name)
+
+    filename = f'dls_algorithm_trace-{datetime.now().strftime("%m_%d_%Y-%I_%M_%S_%p")}.txt'
+
+    # Full path to the file
+    file_path = os.path.join(directory_name, filename)
+
+    if not os.path.exists(file_path):
+        with open(file_path, 'w') as f:
+            f.write(f"\n---------------------------------------------------------\n")
+            f.write(f'Command-Line Arguments : {argv}\n')
+            f.write(f'Method Selected: {method}\n')
+            f.write(f'Running: {method}\n')
+
+            if result:
+                nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, cost, moves = result
+                f.write(f"Nodes Popped: {nodes_popped}\n")
+                f.write(f"Nodes Expanded: {nodes_expanded}\n")
+                f.write(f"Nodes Generated: {nodes_generated}\n")
+                f.write(f"Max Fringe Size: {max_fringe_size}\n")
+                f.write(f"Solution Found at depth {len(moves)} with cost of {cost}.\n")
+                f.write("Steps:\n")
+                for move in moves:
+                    f.write(f"Move {move} {get_move_direction(move)}\n")
+            else:
+                f.write("No solution found.\n")
+            f.write("\n---------------------------------------------------------")
+        print(f"File created at {file_path}")
+    else:
+        print(f"File {file_path} already exists.")
+
+
+def DLSMainMethod(initial_board,goal_board,argv,method,dump_flag):
     initial_state = DLS_State(initial_board, 0, [], None)
     goal_state = DLS_State(goal_board, 0, [], None)
     depth_limit = 100
@@ -108,6 +140,8 @@ def DLSMainMethod(initial_board,goal_board,method):
         result = DLS_Search(initial_state, goal_state, i)
         if result:
             break
+    if dump_flag:
+        DLSTraceResultsToFile(result, argv, method)
     if result:
         nodes_popped, nodes_expanded, nodes_generated, max_fringe_size, cost, moves = result
         print(f"Nodes Popped: {nodes_popped}")
@@ -118,6 +152,6 @@ def DLSMainMethod(initial_board,goal_board,method):
         print("Steps:")
         for move in moves:
             print(f"Move {move} {get_move_direction(move)}")
-        print("\n---------------------------------------------------------")
     else:
         print("No solution found.")
+    print("\n---------------------------------------------------------")

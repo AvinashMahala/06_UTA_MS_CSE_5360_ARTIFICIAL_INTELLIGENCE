@@ -1,0 +1,25 @@
+
+---------------------------------------------------------
+Command-Line Arguments : ['expense_8_puzzle.py', 'start.txt', 'goal.txt', 'a*', 'true']
+Method Selected: a*
+Running: a*
+Nodes Popped: 6536
+Nodes Expanded: 18473
+Nodes Generated: 18473
+Max Fringe Size: 11939
+Solution Found at depth 12 with cost of 63.
+Steps:
+Move 7 Down-Right
+Move 5 Up-Left
+Move 8 Up-Right
+Move 7 Down-Right
+Move 5 Up-Left
+Move 6 Down-Left
+Move 3 Down
+Move 2 Right
+Move 1 Up
+Move 4 Left
+Move 7 Down-Right
+Move 8 Up-Right
+
+---------------------------------------------------------

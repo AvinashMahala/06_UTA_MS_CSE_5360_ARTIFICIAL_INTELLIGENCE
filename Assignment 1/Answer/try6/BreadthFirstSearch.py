@@ -1,4 +1,6 @@
 from queue import Queue
+from datetime import datetime
+import os
 
 class BFS_State:
     def __init__(self, board, cost, moves, last_move):
@@ -60,7 +62,41 @@ def BFS_Search(initial_state, goal_state):
 
     return None, visited, nodes_generated, max_fringe_size
 
-def BFSMainMethod(initial_board,goal_board,method):
+
+def BFSTraceResultsToFile(result, visited, nodes_generated, max_fringe_size, argv, method):
+    directory_name = "trace_logs"
+    # Create the directory if it doesn't exist
+    if not os.path.exists(directory_name):
+        os.makedirs(directory_name)
+
+    filename = f'bfs_algorithm_trace-{datetime.now().strftime("%m_%d_%Y-%I_%M_%S_%p")}.txt'
+
+    # Full path to the file
+    file_path = os.path.join(directory_name, filename)
+
+    if not os.path.exists(file_path):
+        with open(file_path, 'w') as f:
+            f.write(f"\n---------------------------------------------------------\n")
+            f.write(f'Command-Line Arguments : {argv}\n')
+            f.write(f'Method Selected: {method}\n')
+            f.write(f'Running: {method}\n')
+            
+            f.write(f'Nodes Popped: {len(visited)}\n')
+            f.write(f'Nodes Expanded: {nodes_generated}\n')
+            f.write(f'Nodes Generated: {nodes_generated + len(visited)}\n')
+            f.write(f'Max Fringe Size: {max_fringe_size}\n')
+            f.write(f'Solution Found at depth {len(result.moves)} with cost of {result.cost}.\n')
+            f.write('Steps:')
+            for move in result.moves:
+                result.last_move = (result.last_move + 2) % 4
+                f.write(f'\tMove {move} {["Left", "Right", "Up", "Down"][result.last_move]}\n')
+            f.write("\n---------------------------------------------------------")
+        print(f"File created at {file_path}")
+    else:
+        print(f"File {file_path} already exists.")
+    
+
+def BFSMainMethod(initial_board,goal_board,argv,method,dump_flag):
     initial_state = BFS_State(initial_board, 0, [], None)
     goal_state = BFS_State(goal_board, 0, [], None)
     print("\n---------------------------------------------------------")
@@ -78,6 +114,8 @@ def BFSMainMethod(initial_board,goal_board,method):
         for move in result.moves:
             result.last_move = (result.last_move + 2) % 4
             print(f'\tMove {move} {["Left", "Right", "Up", "Down"][result.last_move]}')
-        print("\n---------------------------------------------------------")
+        if dump_flag:
+            BFSTraceResultsToFile(result, visited, nodes_generated, max_fringe_size, argv, method)
     else:
         print("No solution found.")
+    print("\n---------------------------------------------------------")
