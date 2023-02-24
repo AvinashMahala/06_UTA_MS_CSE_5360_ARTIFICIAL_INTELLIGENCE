@@ -40,7 +40,7 @@ How to run the Code?
 	environment variable(This will enable python command to run from Windows Command Window)].
 3. Run the Below Commands as required in order to see the desired output and trace logs:-
 
-expense_8_puzzle.py <start-file> <goal-file> <method> <dump-flag>
+expense_8_puzzle.py <start-file> <goal-file> [<method>] [<dump-flag>]
 
 <start-file> and <goal-file> are required.
 
@@ -51,7 +51,7 @@ expense_8_puzzle.py <start-file> <goal-file> <method> <dump-flag>
 	dls - Depth Limited Search (Note: Depth Limit is obtained as a Console Input[If not provided There is a default value set.])
 	ids - Iterative Deepening Search
 	greedy - Greedy Seach
-	a* - A* Search (Note: if no <method> is given, this should be the default option)
+	a* - A* Search (Note: if no <method> is given, this is the default option)
 	
 	If <dump-flag>  is given as true, search trace is dumped for analysis in 
 	<algorithmName>_trace-<date>-<time>.txt (Note: if <dump-flag> is not given, it is false by default)
