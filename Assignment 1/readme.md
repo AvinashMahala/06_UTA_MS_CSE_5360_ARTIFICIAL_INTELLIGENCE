@@ -33,7 +33,8 @@ How to run the Code?
 
     <start-file> and <goal-file> are required.
 
- <method> can be
+
+ "method" can be
 
 	bfs - Breadth First Search
 	ucs - Uniform Cost Search
