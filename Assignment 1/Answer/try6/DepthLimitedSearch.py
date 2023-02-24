@@ -132,7 +132,15 @@ def DLSTraceResultsToFile(result, argv, method):
 def DLSMainMethod(initial_board,goal_board,argv,method,dump_flag):
     initial_state = DLS_State(initial_board, 0, [], None)
     goal_state = DLS_State(goal_board, 0, [], None)
+    # Prompt the user to enter the desired depth limit
     depth_limit = 100
+    inp=input("Enter the depth limit: ")
+    if(inp.isdigit()):
+        depth_limit = int(inp)
+    else:
+        print("Depth Limit is not provided. The default will be:- ",depth_limit)
+
+    
     result = None
     print("\n---------------------------------------------------------")
     print(f"Method Selected: {method}")
