@@ -13,7 +13,7 @@ How the Code is Structured?
 All the Code files are in the same directory[1002079433].
 There is only one more directory called "trace_logs"
 [if not present will be created at runtime when the 
-<dump-flag> is marked as true] which 
+"dump-flag" is marked as true] which 
 will contain all the trace log files for all the searches.
 
 ---------------------------------------------------
