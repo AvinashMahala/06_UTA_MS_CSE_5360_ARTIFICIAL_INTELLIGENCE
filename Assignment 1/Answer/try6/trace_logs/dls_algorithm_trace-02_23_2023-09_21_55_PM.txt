@@ -1,8 +1,0 @@
-
----------------------------------------------------------
-Command-Line Arguments : ['expense_8_puzzle.py', 'start.txt', 'goal.txt', 'dls', 'true']
-Method Selected: dls
-Running: dls
-No solution found.
-
----------------------------------------------------------
